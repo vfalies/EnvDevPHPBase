@@ -44,6 +44,12 @@ RUN yes | pecl install xdebug \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
+# Composer installation
+RUN curl -sL https://getcomposer.org/composer.phar -o composer.phar \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer \
+    && composer config --global repo.packagist composer https://packagist.org
+
 WORKDIR /var/www
 
 ONBUILD CMD ["php-fpm"]
