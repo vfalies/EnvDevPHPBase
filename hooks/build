@@ -1,3 +1,5 @@
 #!/bin/bash
 
+PV=${IMAGE_NAME: -3}
+echo $PV
 docker build --build-arg PHP_VERSION=$IMAGE_NAME -t $IMAGE_NAME .
