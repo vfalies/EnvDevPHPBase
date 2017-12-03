@@ -53,4 +53,4 @@ RUN curl -sL https://getcomposer.org/composer.phar -o composer.phar \
 
 WORKDIR /var/www
 
-ONBUILD CMD ["php-fpm"]
+CMD ["php-fpm"]
