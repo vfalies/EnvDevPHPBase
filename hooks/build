@@ -1,0 +1,4 @@
+#!/bin/bash
+echo "EnvDevPHPBase building..."
+VERSION_INDEX=`expr index "$TEST" :`
+docker build --build-arg PHP_VERSION=${IMAGE_NAME:$VERSION_INDEX} -t $IMAGE_NAME .

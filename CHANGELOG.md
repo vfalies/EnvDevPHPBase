@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [7.2] - 2017-12-06
 - Creation of 7.2 tag in docker cloud
 
+## [Latest] - 2017-12-06
+- latest version is PHP 7.2
+
 ## [Latest] - 2017-12-05
 - Creation of latest tag in docker cloud
 
