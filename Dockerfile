@@ -16,9 +16,28 @@ RUN apt-get update && apt-get install -y \
         libzzip-dev \
         ssmtp \
         mailutils \
-    && docker-php-ext-install mcrypt xmlrpc zip \
+        zlib1g-dev libicu-dev g++
+RUN docker-php-ext-install \
+        bcmath calendar ctype curl dba dom exif fileinfo ftp gd gettext \
+        hash iconv json mbstring mysqli opcache \ 
+        pcntl pdo pdo_mysql pdo_sqlite \
+        phar posix 
+RUN docker-php-ext-install \
+        session simplexml soap sockets \
+        xml xmlrpc xmlwriter zip \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install gd
+RUN apt-get install -y libgmp-dev re2c libmhash-dev libmcrypt-dev file \
+    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/ \
+    && docker-php-ext-configure gmp \
+    && docker-php-ext-install gmp    
+RUN apt-get install -y libc-client-dev libkrb5-dev \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install imap    
+# RUN apt-get install -y libldap2-dev \
+#     && docker-php-ext-configure ldap \
+#     && docker-php-ext-install ldap    
+RUN docker-php-ext-install -j$(nproc) intl
 
 # Set up sendmail config
 RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
