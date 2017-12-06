@@ -9,7 +9,6 @@ RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
-        libpng12-dev \
         libsqlite3-dev \
         libssl-dev \
         libcurl3-dev \
