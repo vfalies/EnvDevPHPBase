@@ -1,22 +1,29 @@
 # EnvDevPHPBase
 
-EnvDevPHPBase is a PHP container base designed to be used like a base for a utilisation into the [EnvDev project](https://vfac.fr/projects/envdev).
+EnvDevPHPBase is a PHP container based on Alpine to limit the image size,designed to be used like a base for a utilisation into the [EnvDev project](https://vfac.fr/projects/envdev).
 The utlisation outside this project is naturally possible.
 
-## PHP Version
+## Images
 
 Three PHP versions are available through image's tags:
 
-- 5.6 : `docker push vfac/envdevphpbase:5.6`
-- 7.0 : `docker push vfac/envdevphpbase:7.0`
-- 7.1 : `docker push vfac/envdevphpbase:7.1`
-- 7.2 : `docker push vfac/envdevphpbase:7.2`
+- 5.6 
+- 7.0 
+- 7.1 
+- 7.2 
 
-The latest version of EnvDevPHPBase (latest) (`docker push vfac/envdevphpbase`) is a image with the last version of PHP available.
+The latest version of EnvDevPHPBase (latest) (`vfac/envdevphpbase`) is a image with the last version of PHP available.
 
 ## PHP Customization
 
 To customize the PHP image you can share your `php.ini` file into `/usr/local/etc/php/php.ini` into your Dockerfile or docker-compose file.
+A maximum of PHP extension have been added to be used in a maximum of projects.
+
+## Usage
+
+```
+docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:7.2
+```
 
 ## Complements
 
