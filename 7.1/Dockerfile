@@ -56,6 +56,7 @@ RUN apk update \
         php7-sysvsem \
         php7-sysvshm \
         php7-tidy \
+        php7-tokenizer \
         php7-wddx \
         php7-xml \
         php7-xmlreader \
