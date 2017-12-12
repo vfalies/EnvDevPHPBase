@@ -1,0 +1,45 @@
+sudo: required
+
+services:
+  - docker
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.8.1
+
+before_install:
+  - docker version
+
+  - docker build -t vfac/envdevphpbase:5.6 -f 5.6/Dockerfile 5.6/
+  - docker build -t vfac/envdevphpbase:7.0 -f 7.0/Dockerfile 7.0/
+  - docker build -t vfac/envdevphpbase:7.1 -f 7.1/Dockerfile 7.1/
+  - docker build -t vfac/envdevphpbase:7.2 -f 7.2/Dockerfile 7.2/
+
+  - docker run --name php5.6 -d $PWD:/var/www/html vfac/envdevphpbase:5.6
+  - docker run --name php7.0 -d $PWD:/var/www/html vfac/envdevphpbase:7.0
+  - docker run --name php7.1 -d $PWD:/var/www/html vfac/envdevphpbase:7.1
+  - docker run --name php7.2 -d $PWD:/var/www/html vfac/envdevphpbase:7.2
+
+script:
+  - docker exec php5.6 php -v
+  - docker exec php5.6 sh -c "php -v | grep 5.6"
+  - docker exec php5.6 sh -c "php -v | grep OPcache"
+  - docker exec php5.6 sh -c "php test/test.php |grep vfac"
+  - docker exec php5.6 composer --version
+
+  - docker exec php7.0 php -v
+  - docker exec php7.0 sh -c "php -v | grep 7.0"
+  - docker exec php7.0 sh -c "php -v | grep OPcache"
+  - docker exec php7.0 sh -c "php test/test.php |grep vfac"
+  - docker exec php7.0 composer --version
+
+  - docker exec php7.1 php -v
+  - docker exec php7.1 sh -c "php -v | grep 7.1"
+  - docker exec php7.1 sh -c "php -v | grep OPcache"
+  - docker exec php7.1 sh -c "php test/test.php |grep vfac"
+  - docker exec php7.1 composer --version
+
+  - docker exec php7.2 php -v
+  - docker exec php7.2 sh -c "php -v | grep 7.2"
+  - docker exec php7.2 sh -c "php -v | grep OPcache"
+  - docker exec php7.2 sh -c "php test/test.php |grep vfac"
+  - docker exec php7.2 composer --version
