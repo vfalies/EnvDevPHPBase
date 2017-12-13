@@ -67,7 +67,8 @@ RUN apk update \
         php7-zlib \
         php7-xdebug \
         git \
-        ssmtp
+        ssmtp \
+        curl
 
 # Set environment
 RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.conf && \
