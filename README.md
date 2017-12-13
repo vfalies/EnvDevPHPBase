@@ -1,5 +1,7 @@
 # EnvDevPHPBase
 
+[![Build Status](https://travis-ci.org/vfalies/EnvDevPHPBase.svg?branch=master)](https://travis-ci.org/vfalies/EnvDevPHPBase)
+
 EnvDevPHPBase is a PHP container based on Alpine to limit the image size,designed to be used like a base for a utilisation into the [EnvDev project](https://vfac.fr/projects/envdev).
 The utlisation outside this project is naturally possible.
 
