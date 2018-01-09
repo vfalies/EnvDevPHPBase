@@ -62,6 +62,7 @@ RUN apk --update add ca-certificates\
         php7-wddx@cast \
         php7-xml@cast \
         php7-xmlreader@cast \
+        php7-xmlrpc@cast \
         php7-xsl@cast \
         php7-zip@cast \
         php7-zlib@cast \
@@ -96,8 +97,6 @@ RUN echo "localhost localhost.localdomain" >> /etc/hosts
 # Composer installation
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
 RUN composer config --global repo.packagist composer https://packagist.org
-
-RUN rm -rf /var/cache/apk/*
 
 WORKDIR /var/www/html
 
