@@ -49,6 +49,7 @@ RUN apk update \
         php7-session \
         php7-shmop \
         php7-snmp \
+        php7-simplexml \
         php7-soap \
         php7-sockets \
         php7-sqlite3 \
