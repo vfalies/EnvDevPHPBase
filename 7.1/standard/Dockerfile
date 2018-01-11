@@ -26,78 +26,52 @@ RUN apt-get update && apt-get install -y \
     libtidy-dev \
     libxslt1.1 \
     libxslt1-dev \
-    && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant 
-RUN docker-php-ext-install -j$(nproc) exif 
-RUN docker-php-ext-install -j$(nproc) fileinfo 
-RUN docker-php-ext-install -j$(nproc) ftp
-RUN docker-php-ext-install -j$(nproc)  gettext
-RUN docker-php-ext-install -j$(nproc)  hash
-RUN docker-php-ext-install -j$(nproc) iconv
-RUN docker-php-ext-configure imap --with-kerberos --with-imap-ssl 
-RUN docker-php-ext-install -j$(nproc)  imap
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-install -j$(nproc)  intl
-RUN docker-php-ext-install -j$(nproc)  mbstring
-RUN docker-php-ext-install -j$(nproc)  mcrypt
-RUN docker-php-ext-install -j$(nproc)  mysqli
-RUN docker-php-ext-install -j$(nproc)  opcache
-RUN docker-php-ext-install -j$(nproc)  pcntl
-RUN docker-php-ext-install -j$(nproc)  pdo
-RUN docker-php-ext-install -j$(nproc)  pdo_mysql
-RUN docker-php-ext-install -j$(nproc)  pdo_sqlite
-RUN docker-php-ext-install -j$(nproc)  phar
-RUN docker-php-ext-install -j$(nproc)  posix
-RUN docker-php-ext-install -j$(nproc)  pspell
-RUN docker-php-ext-install -j$(nproc)  readline
-RUN docker-php-ext-install -j$(nproc)  recode
-RUN docker-php-ext-install -j$(nproc)  session
-RUN docker-php-ext-install -j$(nproc)  shmop
-RUN docker-php-ext-install -j$(nproc)  simplexml
-RUN docker-php-ext-install -j$(nproc)  snmp
-RUN docker-php-ext-install -j$(nproc)  soap
-RUN docker-php-ext-install -j$(nproc)  sockets
-RUN docker-php-ext-install -j$(nproc)  sysvmsg
-RUN docker-php-ext-install -j$(nproc)  sysvsem
-RUN docker-php-ext-install -j$(nproc)  sysvshm
-RUN docker-php-ext-install -j$(nproc)  tidy
-RUN docker-php-ext-install -j$(nproc)  tokenizer
-RUN docker-php-ext-install -j$(nproc)  wddx
-RUN docker-php-ext-install -j$(nproc)  xml
-RUN docker-php-ext-install -j$(nproc)  xmlrpc
-RUN docker-php-ext-install -j$(nproc)  xmlwriter
-RUN docker-php-ext-install -j$(nproc)  xsl
-RUN docker-php-ext-install -j$(nproc)  zip \
+    ssmtp \
+    libgmp-dev \
+    libldb-dev \ 
+    libldap2-dev \
+    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    && docker-php-ext-install -j$(nproc) imap \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install -j$(nproc) intl \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) gd 
+    && docker-php-ext-install -j$(nproc) gd \
+    && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
+    && docker-php-ext-install ldap \
+    && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext gmp hash iconv \
+                                         mbstring mcrypt mysqli opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
+                                         session shmop simplexml snmp soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlrpc \
+                                         xmlwriter xsl zip \
+    && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/* 
 
-#RUN docker-php-ext-install -j$(nproc)  gmp
-# --with-gmp=/usr/include/x86_64-linux-gnu ?
-#RUN docker-php-ext-install -j$(nproc) filter
-#RUN docker-php-ext-install -j$(nproc)  interbase
-# RUN apt-get install -y libldb-dev libldap2-dev
-# RUN docker-php-ext-install -j$(nproc)  ldap
-#RUN docker-php-ext-install -j$(nproc)  oci8
+# set up sendmail config
+RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
+RUN echo "root=vincent.falies@wolterskluwer.com" >> /etc/ssmtp/ssmtp.conf
+RUN echo "mailhub=maildev" >> /etc/ssmtp/ssmtp.conf
+# The above 'maildev' is the name you used for the link command
+# in your docker-compose file or docker link command.
+# Docker automatically adds that name in the hosts file
+# of the container you're linking MailDev to.
 
-# RUN apt-get install -y unixODBC-dev
-# RUN set -x \
-#     && cd /usr/src/php/ext/odbc \
-#     && phpize \
-#     && sed -ri 's@^ *test +"\$PHP_.*" *= *"no" *&& *PHP_.*=yes *$@#&@g' configure \
-#     && ./configure --with-unixODBC=shared,/usr \
-#     && docker-php-ext-install -j$(nproc) odbc
-# RUN apt-get install -y         freetds-bin \
-#         freetds-dev \
-#         freetds-common 
-# RUN docker-php-ext-install -j$(nproc)  pdo_dblib
+# Set up php sendmail config
+RUN echo "sendmail_path=sendmail -i -t" >> /usr/local/etc/php/conf.d/php-sendmail.ini
 
-#RUN docker-php-ext-install -j$(nproc)  pdo_firebird
-#RUN docker-php-ext-install -j$(nproc)  pdo_oci
-#RUN docker-php-ext-install -j$(nproc) pdo_odbc
-#RUN docker-php-ext-install -j$(nproc)  pdo_pgsql
-#RUN docker-php-ext-install -j$(nproc)  pgsql
-#RUN docker-php-ext-install -j$(nproc)  reflection
-#RUN docker-php-ext-install -j$(nproc)  spl
-#RUN docker-php-ext-install -j$(nproc) standard
-#RUN docker-php-ext-install -j$(nproc)  xmlreader
+# Fully qualified domain name configuration for sendmail on localhost.
+# Without this sendmail will not work.
+# This must match the value for 'hostname' field that you set in ssmtp.conf.
+RUN echo "localhost localhost.localdomain" >> /etc/hosts
 
-RUN rm -rf /var/lib/apt/lists/*
+# Set up XDebug
+RUN yes | pecl install xdebug \
+    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+
+# Composer installation
+COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
+RUN composer config --global repo.packagist composer https://packagist.org
+
+WORKDIR /var/www/html
+
+ENTRYPOINT ["/usr/local/sbin/php-fpm"]
