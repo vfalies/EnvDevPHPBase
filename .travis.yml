@@ -23,10 +23,10 @@ before_install:
   - docker build -q -t vfac/envdevphpbase:7.0 -f 7.0/Dockerfile 7.0/
   - docker build -q -t vfac/envdevphpbase:7.1 -f 7.1/Dockerfile 7.1/
   - docker build -q -t vfac/envdevphpbase:7.2 -f 7.2/Dockerfile 7.2/
-  - docker build -q -t vfac/envdevphpbase:5.6-alpine -f 5.6/Dockerfile 5.6/alpine/
-  - docker build -q -t vfac/envdevphpbase:7.0-alpine -f 7.0/Dockerfile 7.0/alpine/
-  - docker build -q -t vfac/envdevphpbase:7.1-alpine -f 7.1/Dockerfile 7.1/alpine/
-  - docker build -q -t vfac/envdevphpbase:7.2-alpine -f 7.2/Dockerfile 7.2/alpine/
+  - docker build -q -t vfac/envdevphpbase:5.6-alpine -f 5.6/alpine/Dockerfile 5.6/alpine/
+  - docker build -q -t vfac/envdevphpbase:7.0-alpine -f 7.0/alpine/Dockerfile 7.0/alpine/
+  - docker build -q -t vfac/envdevphpbase:7.1-alpine -f 7.1/alpine/Dockerfile 7.1/alpine/
+  - docker build -q -t vfac/envdevphpbase:7.2-alpine -f 7.2/alpine/Dockerfile 7.2/alpine/
 
   - docker run --name php5.6 -d -v $PWD:/var/www/html vfac/envdevphpbase:5.6
   - docker run --name php7.0 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.0
