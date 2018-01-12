@@ -27,6 +27,7 @@ RUN apt-get update && apt-get install -y \
     libxslt1.1 \
     libxslt1-dev \
     ssmtp \
+    snmp \
     libgmp-dev \
     libldb-dev \ 
     libldap2-dev \

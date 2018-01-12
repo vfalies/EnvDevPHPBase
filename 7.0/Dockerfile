@@ -26,6 +26,7 @@ RUN apt-get update && apt-get install -y \
     libtidy-dev \
     libxslt1.1 \
     libxslt1-dev \
+    snmp \
     ssmtp \
     libgmp-dev \
     libldb-dev \ 
@@ -69,7 +70,7 @@ RUN yes | pecl install xdebug \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # Composer installation
-COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer    
 RUN composer config --global repo.packagist composer https://packagist.org
 
 WORKDIR /var/www/html
