@@ -8,12 +8,13 @@ services:
     depends_on:
       - fpm
     ports: 
-      - 8170:80
+      - 8172:80
     volumes:
       - "$PWD/test:/var/www/html"      
 
   fpm:
-    image: vfac/envdevphpbase:7.0-alpine
+    image: vfac/envdevphpbase:7.2-alpine
+    name: fpm_7.2-alpine
     expose:
       - 9000
     volumes:
