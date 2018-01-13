@@ -14,7 +14,6 @@ services:
 
   fpm:
     image: vfac/envdevphpbase:7.2-alpine
-    name: fpm_7.2-alpine
     expose:
       - 9000
     volumes:
