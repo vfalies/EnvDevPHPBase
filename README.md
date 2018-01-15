@@ -2,12 +2,12 @@
 
 [![Build Status](https://travis-ci.org/vfalies/EnvDevPHPBase.svg?branch=master)](https://travis-ci.org/vfalies/EnvDevPHPBase)
 
-EnvDevPHPBase is a PHP container based on Alpine to limit the image size,designed to be used like a base for a utilisation into the [EnvDev project](https://vfac.fr/projects/envdev).
+EnvDevPHPBase is a PHP container designed to be used like a base for a utilisation into the [EnvDev project](https://vfac.fr/projects/envdev).
 The utlisation outside this project is naturally possible.
 
 ## Images
 
-Three PHP versions are available through image's tags:
+Four PHP versions are available through image's tags:
 
 - 5.6 
 - 7.0 
@@ -15,6 +15,8 @@ Three PHP versions are available through image's tags:
 - 7.2 
 
 The latest version of EnvDevPHPBase (latest) (`vfac/envdevphpbase`) is a image with the last version of PHP available.
+
+Each versions exist in Alpine version to limit the image size.
 
 ## PHP Customization
 
@@ -40,6 +42,8 @@ X-Debug (2.5.5) is installed with standard options.
 Two options have been customized: 
     - remote_enable=on
     - remote_autostart=off
+
+Note: X-Debug is not yet available for PHP 7.2 and PHP 7.2 alpine
 
 ### Composer
 
