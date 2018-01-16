@@ -62,7 +62,6 @@ RUN apk --update add ca-certificates\
         php7-wddx@cast \
         php7-xml@cast \
         php7-xmlreader@cast \
-        php7-xmlrpc@cast \
         php7-xsl@cast \
         php7-zip@cast \
         php7-zlib@cast \
