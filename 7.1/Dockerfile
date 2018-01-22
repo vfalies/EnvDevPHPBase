@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libicu-dev \
     g++ \
+    git \
     libsqlite3-dev \
     libpspell-dev \
     libreadline-dev \
