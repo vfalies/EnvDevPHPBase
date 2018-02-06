@@ -38,12 +38,12 @@ There are no consequence if you use this image for an another utilisation.
 
 ### X-Debug
 
-X-Debug (2.5.5) is installed with standard options.
+X-Debug is installed with standard options.
 Two options have been customized: 
     - remote_enable=on
     - remote_autostart=off
 
-Note: X-Debug is not yet available for PHP 7.2 and PHP 7.2 alpine
+Note: X-Debug is not yet available for PHP 7.2 alpine
 
 ### Composer
 
