@@ -43,8 +43,6 @@ Two options have been customized:
     - remote_enable=on
     - remote_autostart=off
 
-Note: X-Debug is not yet available for PHP 7.2 alpine
-
 ### Composer
 
 Composer (1.5.5) is installed to be used with your configuration of PHP.
