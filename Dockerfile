@@ -1,4 +1,4 @@
-FROM php:5.6-fpm
+FROM php:7.1-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -40,10 +40,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap \
-    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
-    && docker-php-ext-configure gmp --with-gmp=/usr/include/x86_64-linux-gnu \
-    && docker-php-ext-install gmp \
-    && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext hash iconv \
+    && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext gmp hash iconv \
                                          mbstring mcrypt mysqli opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
                                          session shmop simplexml snmp soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlrpc \
                                          xmlwriter xsl zip \
@@ -79,4 +76,18 @@ RUN composer config --global repo.packagist composer https://packagist.org
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["/usr/local/sbin/php-fpm"]
+# User creation
+RUN useradd -U -m -r -o -u 1003 vfac
+
+# install fixuid
+RUN USER=vfac && \
+    GROUP=vfac && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.3/fixuid-0.3-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+ENTRYPOINT ["fixuid"]
+
+CMD ["/usr/local/sbin/php-fpm"]
+USER vfac:vfac
