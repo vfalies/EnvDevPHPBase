@@ -77,4 +77,18 @@ RUN composer config --global repo.packagist composer https://packagist.org
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["/usr/local/sbin/php-fpm"]
+# User creation
+RUN useradd -U -m -r -o -u 1003 vfac
+
+# install fixuid
+RUN USER=vfac && \
+    GROUP=vfac && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.3/fixuid-0.3-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+ENTRYPOINT ["fixuid"]
+
+CMD ["/usr/local/sbin/php-fpm"]
+USER vfac:vfac
