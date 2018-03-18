@@ -21,8 +21,7 @@ before_install:
 
   - docker build -q -t vfac/envdevphpbase:7.2-alpine-cli .
 
-  - docker run --name php7.2-alpine-cli -d -v $PWD:/var/www/html vfac/envdevphpbase:7.2-alpine-cli
-script:
-  - docker exec php7.2-alpine-cli php -v
-  - docker exec php7.2-alpine-cli sh -c "php -v | grep 7.2"
-  - docker exec php7.2-alpine-cli composer --version
+  script:
+  - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli php -v
+  - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli sh -c "php -v | grep 7.2"
+  - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli composer --version
