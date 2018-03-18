@@ -1,99 +1,99 @@
-FROM alpine:3.7
+FROM php:7.2-cli-alpine
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
-ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
-
-RUN apk --update add ca-certificates\
-    && echo "@edge-main http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
-    && echo "@edge-community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-    && echo "@cast https://php.codecasts.rocks/v3.7/php-7.2" >> /etc/apk/repositories \
-    && apk add -U \
-        tini \
-        php7@cast \
-        php7-fpm@cast \
-        php7-bcmath@cast \
-        php7-bz2@cast \
-        php7-calendar@cast \
-        php7-ctype@cast \
-        php7-curl@cast \
-        php7-dba@cast \
-        php7-dom@cast \
-        php7-embed@cast \
-        php7-enchant@cast \
-        php7-exif@cast \
-        php7-ftp@cast \
-        php7-gd@cast \
-        php7-gettext@cast \
-        php7-gmp@cast \
-        php7-iconv@cast \
-        php7-imap@cast \
-        php7-intl@cast \
-        php7-json@cast \
-        php7-ldap@cast \
-        php7-litespeed@cast \
-        php7-mbstring@cast \
-        php7-mysqli@cast \
-        php7-mysqlnd@cast \
-        php7-odbc@cast \
-        php7-opcache@cast \
-        php7-openssl@cast \
-        php7-pcntl@cast \
-        php7-pdo@cast \
-        php7-pdo_dblib@cast \
-        php7-pdo_mysql@cast \
-        php7-pdo_pgsql@cast \
-        php7-pdo_sqlite@cast \
-        php7-pear@cast \
-        php7-pgsql@cast \
-        php7-phar@cast \
-        php7-phpdbg@cast \
-        php7-posix@cast \
-        php7-pspell@cast \
-        php7-session@cast \
-        php7-shmop@cast \
-        php7-snmp@cast \
-        php7-soap@cast \
-        php7-sockets@cast \
-        php7-sqlite3@cast \
-        php7-sysvmsg@cast \
-        php7-sysvsem@cast \
-        php7-sysvshm@cast \
-        php7-tidy@cast \
-        php7-wddx@cast \
-        php7-xml@cast \
-        php7-xmlreader@cast \
-        php7-xsl@cast \
-        php7-zip@cast \
-        php7-zlib@cast \
-        php7-xdebug@cast \
-        git \
-        ssmtp \
+RUN apk --update add ca-certificates && \
+    apk add -U \
+        php7-intl \
+        php7-openssl \
+        php7-dba \
+        php7-sqlite3 \
+        php7-pear \
+        php7-tokenizer \
+        php7-phpdbg \
+        cacti-php7 \
+        xapian-bindings-php7 \
+        php7-litespeed \
+        php7-gmp \
+        php7-pdo_mysql \
+        php7-pcntl \
+        php7-common \
+        php7-xsl \
+        php7-fpm \
+        php7-imagick \
+        php7-mysqlnd \
+        php7-enchant \
+        php7-pspell \
+        php7-redis \
+        php7-snmp \
+        php7-doc \
+        php7-fileinfo \
+        php7-mbstring \
+        php7-dev \
+        php7-pear-mail_mime \
+        php7-xmlrpc \
+        php7-embed \
+        php7-xmlreader \
+        php7-pear-mdb2_driver_mysql \
+        php7-pdo_sqlite \
+        php7-pear-auth_sasl2 \
+        php7-exif \
+        php7-recode \
+        php7-opcache \
+        php7-ldap \
+        php7-posix \
+        php7-pear-net_socket \
+        php7-session \
+        php7-gd \
+        php7-gettext \
+        php7-mailparse \
+        php7-json \
+        php7-xml \
+        php7 \
+        php7-iconv \
+        php7-sysvshm \
+        php7-curl \
+        php7-shmop \
+        php7-odbc \
+        php7-phar \
+        php7-pdo_pgsql \
+        php7-imap \
+        php7-pear-mdb2_driver_pgsql \
+        php7-pdo_dblib \
+        php7-pgsql \
+        php7-pdo_odbc \
+        php7-xdebug \
+        php7-zip \
+        php7-apache2 \
+        php7-cgi \
+        php7-ctype \
+        php7-amqp \
+        php7-mcrypt \
+        php7-wddx \
+        php7-pear-net_smtp \
+        php7-bcmath \
+        php7-calendar \
+        php7-tidy \
+        php7-dom \
+        php7-sockets \
+        php7-zmq \
+        php7-memcached \
+        php7-soap \
+        php7-apcu \
+        php7-sysvmsg \
+        php7-zlib \
+        php7-imagick-dev \
+        php7-ftp \
+        php7-sysvsem \
+        php7-pdo \
+        php7-pear-auth_sasl \
+        php7-bz2 \
+        php7-mysqli \
+        php7-pear-net_smtp-doc \
+        php7-simplexml \
+        php7-xmlwriter \
         shadow \
         curl \
-    && ln -s /usr/bin/php7 /usr/bin/php \
     && rm -rf /var/cache/apk/*
-
-# Set environment
-RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.conf && \
-	sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = 9000|g" /etc/php7/php-fpm.d/www.conf && \
-	sed -i "s|;*listen\s*=\s*/||g" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "s|;*;clear_env\s*=\s*no|clear_env = no|g" /etc/php7/php-fpm.d/www.conf
-
-EXPOSE 9000
-
-# Set up sendmail config
-RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
-RUN echo "root=<your email address>" >> /etc/ssmtp/ssmtp.conf
-RUN echo "mailhub=maildev" >> /etc/ssmtp/ssmtp.conf
-# The above 'maildev' is the name you used for the link command
-# in your docker-compose file or docker link command.
-# Docker automatically adds that name in the hosts file
-# of the container you're linking MailDev to.
-
-# Fully qualified domain name configuration for sendmail on localhost.
-# Without this sendmail will not work.
-# This must match the value for 'hostname' field that you set in ssmtp.conf.
-RUN echo "localhost localhost.localdomain" >> /etc/hosts
 
 # Composer installation
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
