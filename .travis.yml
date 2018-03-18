@@ -19,78 +19,15 @@ before_install:
 
   - docker --version
 
-  - docker build -q -t vfac/envdevphpbase:5.6 -f 5.6/Dockerfile 5.6/
-  - docker build -q -t vfac/envdevphpbase:7.0 -f 7.0/Dockerfile 7.0/
-  - docker build -q -t vfac/envdevphpbase:7.1 -f 7.1/Dockerfile 7.1/
-  - docker build -q -t vfac/envdevphpbase:7.2 -f 7.2/Dockerfile 7.2/
-  - docker build -q -t vfac/envdevphpbase:5.6-alpine -f 5.6alpine/Dockerfile 5.6alpine/
-  - docker build -q -t vfac/envdevphpbase:7.0-alpine -f 7.0alpine/Dockerfile 7.0alpine/
-  - docker build -q -t vfac/envdevphpbase:7.1-alpine -f 7.1alpine/Dockerfile 7.1alpine/
-  - docker build -q -t vfac/envdevphpbase:7.2-alpine -f 7.2alpine/Dockerfile 7.2alpine/
+  - docker build -q -t vfac/envdevphpbase:7.0-alpine-cli .
 
-  - docker run --name php5.6 -d -v $PWD:/var/www/html vfac/envdevphpbase:5.6
-  - docker run --name php7.0 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.0
-  - docker run --name php7.1 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.1
-  - docker run --name php7.2 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.2
-  - docker run --name php5.6-alpine -d -v $PWD:/var/www/html vfac/envdevphpbase:5.6-alpine
-  - docker run --name php7.0-alpine -d -v $PWD:/var/www/html vfac/envdevphpbase:7.0-alpine
-  - docker run --name php7.1-alpine -d -v $PWD:/var/www/html vfac/envdevphpbase:7.1-alpine
-  - docker run --name php7.2-alpine -d -v $PWD:/var/www/html vfac/envdevphpbase:7.2-alpine
+  - docker run --name php7.0-alpine-cli -d -v $PWD:/var/www/html vfac/envdevphpbase:7.0-alpine-cli
 
-  - docker-compose -f test/5.6/docker-compose.yml up -d 
-  - docker-compose -f test/7.0/docker-compose.yml up -d 
-  - docker-compose -f test/7.1/docker-compose.yml up -d
-  - docker-compose -f test/7.2/docker-compose.yml up -d 
-  - docker-compose -f test/5.6alpine/docker-compose.yml up -d 
-  - docker-compose -f test/7.0alpine/docker-compose.yml up -d 
-  - docker-compose -f test/7.1alpine/docker-compose.yml up -d 
-  - docker-compose -f test/7.2alpine/docker-compose.yml up -d 
+  - docker-compose -f test/7.0-alpine-cli/docker-compose.yml up -d
 
 script:
-  - docker exec php5.6 php -v
-  - docker exec php5.6 sh -c "php -v | grep 5.6"
-  - docker exec php5.6 sh -c "php test/test.php |grep version"
-  - docker exec php5.6 composer --version
-  - curl -s localhost:8056/test.php |grep bcmath
-
-  - docker exec php7.0 php -v
-  - docker exec php7.0 sh -c "php -v | grep 7.0"
-  - docker exec php7.0 sh -c "php test/test.php |grep version"
-  - docker exec php7.0 composer --version
-  - curl -s localhost:8070/test.php |grep bcmath
-
-  - docker exec php7.1 php -v
-  - docker exec php7.1 sh -c "php -v | grep 7.1"
-  - docker exec php7.1 sh -c "php test/test.php |grep version"
-  - docker exec php7.1 composer --version
-  - curl -s localhost:8071/test.php |grep bcmath
-
-  - docker exec php7.2 php -v
-  - docker exec php7.2 sh -c "php -v | grep 7.2"
-  - docker exec php7.2 sh -c "php test/test.php |grep version"
-  - docker exec php7.2 composer --version
-  - curl -s localhost:8072/test.php |grep bcmath
-
-  - docker exec php5.6-alpine php -v
-  - docker exec php5.6-alpine sh -c "php -v | grep 5.6"
-  - docker exec php5.6-alpine sh -c "php test/test.php |grep version"
-  - docker exec php5.6-alpine composer --version
-  - curl -s localhost:8156/test.php |grep bcmath
-
-  - docker exec php7.0-alpine php -v
-  - docker exec php7.0-alpine sh -c "php -v | grep 7.0"
-  - docker exec php7.0-alpine sh -c "php test/test.php |grep version"
-  - docker exec php7.0-alpine composer --version
+  - docker exec php7.0-alpine-cli php -v
+  - docker exec php7.0-alpine-cli sh -c "php -v | grep 7.0"
+  - docker exec php7.0-alpine-cli sh -c "php test/test.php |grep version"
+  - docker exec php7.0-alpine-cli composer --version
   - curl -s localhost:8170/test.php |grep bcmath
-
-  - docker exec php7.1-alpine php -v
-  - docker exec php7.1-alpine sh -c "php -v | grep 7.1"
-  - docker exec php7.1-alpine sh -c "php test/test.php |grep version"
-  - docker exec php7.1-alpine composer --version
-  - curl -s localhost:8171/test.php |grep bcmath
-
-  - docker exec php7.2-alpine php -v
-  - docker exec php7.2-alpine sh -c "php -v | grep 7.2"
-  - docker exec php7.2-alpine sh -c "php test/test.php |grep version"
-  - docker exec php7.2-alpine composer --version
-  - curl -s localhost:8172/test.php |grep bcmath

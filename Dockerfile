@@ -65,7 +65,9 @@ RUN apk update \
         php7-zlib \
         php7-xdebug \
         git \
-        ssmtp
+        ssmtp \
+        curl \
+        shadow
 
 # Set environment
 RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.conf && \
@@ -96,12 +98,24 @@ COPY --from=php:7.0.26-cli-alpine /usr/lib/libcrypto.so.1.0.0 /usr/lib/libcrypto
 
 # Composer installation
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
-RUN composer config --global repo.packagist composer https://packagist.org
-
-RUN rm -rf /var/cache/apk/*
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["/sbin/tini", "--"]
+# User creation
+RUN useradd -U -m -r -o -u 1003 vfac
 
-CMD ["/usr/sbin/php-fpm7", "-R", "--nodaemonize"]
+# install fixuid
+RUN USER=vfac && \
+    GROUP=vfac && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.3/fixuid-0.3-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+
+ENTRYPOINT ["fixuid"]
+
+USER vfac:vfac
+RUN composer config --global repo.packagist composer https://packagist.org
+
+CMD ["/bin/sh"]
