@@ -68,6 +68,8 @@ RUN apk --update add ca-certificates\
         php7-xdebug@cast \
         git \
         ssmtp \
+        shadow \
+        curl \
     && ln -s /usr/bin/php7 /usr/bin/php \
     && rm -rf /var/cache/apk/*
 
@@ -75,7 +77,7 @@ RUN apk --update add ca-certificates\
 RUN sed -i "s|;*daemonize\s*=\s*yes|daemonize = no|g" /etc/php7/php-fpm.conf && \
 	sed -i "s|;*listen\s*=\s*127.0.0.1:9000|listen = 9000|g" /etc/php7/php-fpm.d/www.conf && \
 	sed -i "s|;*listen\s*=\s*/||g" /etc/php7/php-fpm.d/www.conf && \
-    sed -i "s|;*;clear_env\s*=\s*no|clear_env = no|g" /etc/php7/php-fpm.d/www.conf 
+    sed -i "s|;*;clear_env\s*=\s*no|clear_env = no|g" /etc/php7/php-fpm.d/www.conf
 
 EXPOSE 9000
 
@@ -95,10 +97,25 @@ RUN echo "localhost localhost.localdomain" >> /etc/hosts
 
 # Composer installation
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
-RUN composer config --global repo.packagist composer https://packagist.org
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["/sbin/tini", "--"]
+# User creation
+RUN useradd -U -m -r -o -u 1003 vfac
 
-CMD ["/usr/sbin/php-fpm7", "-R", "--nodaemonize"]
+# install fixuid
+RUN USER=vfac && \
+    GROUP=vfac && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.3/fixuid-0.3-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+
+ENTRYPOINT ["fixuid"]
+
+USER vfac:vfac
+RUN composer config --global repo.packagist composer https://packagist.org
+
+CMD ["/bin/sh"]
+
