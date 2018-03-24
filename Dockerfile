@@ -1,4 +1,4 @@
-FROM php:7.2-cli
+FROM php:7.1-cli
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
     libpng-dev \
-    libbz2-dev \ 
+    libbz2-dev \
     libcurl4-gnutls-dev \
     libxml2-dev \
     libenchant-dev \
@@ -30,9 +30,8 @@ RUN apt-get update && apt-get install -y \
     ssmtp \
     snmp \
     libgmp-dev \
-    libldb-dev \ 
+    libldb-dev \
     libldap2-dev \
-    libsodium-dev \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
@@ -42,11 +41,11 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap \
     && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext gmp hash iconv \
-                                         mbstring sodium mysqli opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
+                                         mbstring mysqli mcrypt opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
                                          session shmop simplexml snmp soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlrpc \
                                          xmlwriter xsl zip \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/*
 
 # set up sendmail config
 RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
