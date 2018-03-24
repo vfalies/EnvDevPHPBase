@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.2-cli
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -73,7 +73,6 @@ RUN yes | pecl install xdebug \
 
 # Composer installation
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
-RUN composer config --global repo.packagist composer https://packagist.org
 
 WORKDIR /var/www/html
 
@@ -90,5 +89,7 @@ RUN USER=vfac && \
     printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 ENTRYPOINT ["fixuid"]
 
-CMD ["/usr/local/sbin/php-fpm"]
 USER vfac:vfac
+RUN composer config --global repo.packagist composer https://packagist.org
+
+CMD ["/bin/sh"]

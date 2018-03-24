@@ -18,13 +18,9 @@ before_install:
   - chmod +x /usr/local/bin/docker-compose
 
   - docker --version
-  - docker build -q -t vfac/envdevphpbase:7.2 .
-  - docker run --name php7.2 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.2
-  - docker-compose -f test/7.2/docker-compose.yml up -d
+  - docker build -q -t vfac/envdevphpbase:7.2-cli .
 
 script:
-  - docker exec php7.2 php -v
-  - docker exec php7.2 sh -c "php -v | grep 7.2"
-  - docker exec php7.2 sh -c "php test/test.php |grep version"
-  - docker exec php7.2 composer --version
-  - curl -s localhost:8072/test.php |grep bcmath
+  - docker run --rm vfac/envdevphpbase:7.2-cli php -v
+  - docker run --rm vfac/envdevphpbase:7.2-cli sh -c "php -v | grep 7.2"
+  - docker run --rm vfac/envdevphpbase:7.2-cli composer --version
