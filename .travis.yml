@@ -23,11 +23,8 @@ before_install:
 
   - docker run --name php7.2-fpm-alpine -d -v $PWD:/var/www/html vfac/envdevphpbase:7.2-fpm-alpine
 
-  - docker-compose -f test/7.2-fpm-alpine/docker-compose.yml up -d 
-
 script:
   - docker exec php7.2-fpm-alpine php -v
   - docker exec php7.2-fpm-alpine sh -c "php -v | grep 7.2"
-  - docker exec php7.2-fpm-alpine sh -c "php test/test.php |grep version"
   - docker exec php7.2-fpm-alpine composer --version
-  - curl -s localhost:8172/test.php |grep bcmath
+  - docker exec php7.2-fpm-alpine ps |grep php-fpm
