@@ -18,9 +18,9 @@ before_install:
   - chmod +x /usr/local/bin/docker-compose
 
   - docker --version
-  - docker build -q -t vfac/envdevphpbase:7.1-cli .
+  - docker build -q -t vfac/envdevphpbase:7.0-cli .
 
 script:
-  - docker run --rm vfac/envdevphpbase:7.1-cli php -v
-  - docker run --rm vfac/envdevphpbase:7.1-cli sh -c "php -v | grep 7.1"
-  - docker run --rm vfac/envdevphpbase:7.1-cli composer --version
+  - docker run --rm vfac/envdevphpbase:7.0-cli php -v
+  - docker run --rm vfac/envdevphpbase:7.0-cli sh -c "php -v | grep 7.0"
+  - docker run --rm vfac/envdevphpbase:7.0-cli composer --version
