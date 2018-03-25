@@ -5,9 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [2018-03-25]
+
+### Added
+
+- Add PHP 7.0 Cli branch
+- Add PHP 7.1 Cli branch
+- Add PHP 7.2 Cli branch
+- Add PHP 7.0 Cli Alpine branch
+- Add PHP 7.1 Cli Alpine branch
+- Add PHP 7.2 Cli Alpine branch
+- Add PHP 7.0 Fpm branch
+- Add PHP 7.1 Fpm branch
+- Add PHP 7.2 Fpm branch
+- Add PHP 7.0 Fpm Alpine branch
+- Add PHP 7.1 Fpm Alpine branch
+- Add PHP 7.2 Fpm Alpine branch
+
+### Changed
+
+- Separate code from tags to branches
+- Use specific user connected to current host user (same rights)
+
+### Deleted
+
+- Remove PHP 5.6 support
+
 ## [7.2] [7.2Alpine]
 
-### Added 
+### Added
 
 - Add X-Debug 2.6.0
 
