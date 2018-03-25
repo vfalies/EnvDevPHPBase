@@ -2,6 +2,7 @@ FROM php:7.2-cli-alpine
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apk --update add ca-certificates && \
+    echo "@edge-community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     apk add -U \
         php7-intl \
         php7-openssl \
@@ -93,10 +94,8 @@ RUN apk --update add ca-certificates && \
         php7-xmlwriter \
         shadow \
         curl \
+        composer@edge-community \
     && rm -rf /var/cache/apk/*
-
-# Composer installation
-COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
