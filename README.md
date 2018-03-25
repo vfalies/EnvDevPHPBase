@@ -7,14 +7,16 @@ The utlisation outside this project is naturally possible.
 
 ## Images
 
-Four PHP versions are available through image's tags:
+Six PHP versions are available through image's tags:
 
-- 5.6 
-- 7.0 
-- 7.1 
-- 7.2 
+- 7.0 FPM
+- 7.1 FPM
+- 7.2 FPM
+- 7.0 CLI
+- 7.1 CLI
+- 7.2 CLI
 
-The latest version of EnvDevPHPBase (latest) (`vfac/envdevphpbase`) is a image with the last version of PHP available.
+The latest version of EnvDevPHPBase (latest) (`vfac/envdevphpbase`) is a image with the last version of PHP FPM available.
 
 Each versions exist in Alpine version to limit the image size.
 
@@ -26,7 +28,7 @@ A maximum of PHP extension have been added to be used in a maximum of projects.
 ## Usage
 
 ```
-docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:7.2
+docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:7.2-fpm
 ```
 
 ## Complements
@@ -39,10 +41,10 @@ There are no consequence if you use this image for an another utilisation.
 ### X-Debug
 
 X-Debug is installed with standard options.
-Two options have been customized: 
+Two options have been customized:
     - remote_enable=on
     - remote_autostart=off
 
 ### Composer
 
-Composer (1.5.5) is installed to be used with your configuration of PHP.
+Composer is installed to be used with your configuration of PHP.
