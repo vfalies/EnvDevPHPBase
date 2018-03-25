@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
     libpng-dev \
-    libbz2-dev \ 
+    libbz2-dev \
     libcurl4-gnutls-dev \
     libxml2-dev \
     libenchant-dev \
@@ -30,7 +30,7 @@ RUN apt-get update && apt-get install -y \
     ssmtp \
     snmp \
     libgmp-dev \
-    libldb-dev \ 
+    libldb-dev \
     libldap2-dev \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
@@ -45,7 +45,7 @@ RUN apt-get update && apt-get install -y \
                                          session shmop simplexml snmp soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlrpc \
                                          xmlwriter xsl zip \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/*
 
 # set up sendmail config
 RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
@@ -72,8 +72,6 @@ RUN yes | pecl install xdebug \
 
 # Composer installation
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
-RUN composer config --global repo.packagist composer https://packagist.org
-
 WORKDIR /var/www/html
 
 # User creation
@@ -91,3 +89,5 @@ ENTRYPOINT ["fixuid"]
 
 CMD ["/usr/local/sbin/php-fpm"]
 USER vfac:vfac
+
+RUN composer config --global repo.packagist composer https://packagist.org
