@@ -1,4 +1,4 @@
-FROM php:5.6-fpm
+FROM php:7.2-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
     libpng-dev \
-    libbz2-dev \ 
+    libbz2-dev \
     libcurl4-gnutls-dev \
     libxml2-dev \
     libenchant-dev \
@@ -30,8 +30,9 @@ RUN apt-get update && apt-get install -y \
     ssmtp \
     snmp \
     libgmp-dev \
-    libldb-dev \ 
+    libldb-dev \
     libldap2-dev \
+    libsodium-dev \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
@@ -40,15 +41,12 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap \
-    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
-    && docker-php-ext-configure gmp --with-gmp=/usr/include/x86_64-linux-gnu \
-    && docker-php-ext-install gmp \
-    && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext hash iconv \
-                                         mbstring mcrypt mysqli opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
+    && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext gmp hash iconv \
+                                         mbstring sodium mysqli opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
                                          session shmop simplexml snmp soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlrpc \
                                          xmlwriter xsl zip \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
-    && rm -rf /var/lib/apt/lists/* 
+    && rm -rf /var/lib/apt/lists/*
 
 # set up sendmail config
 RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
@@ -75,8 +73,23 @@ RUN yes | pecl install xdebug \
 
 # Composer installation
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
-RUN composer config --global repo.packagist composer https://packagist.org
 
 WORKDIR /var/www/html
 
-ENTRYPOINT ["/usr/local/sbin/php-fpm"]
+# User creation
+RUN useradd -U -m -r -o -u 1003 vfac
+
+# install fixuid
+RUN USER=vfac && \
+    GROUP=vfac && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.3/fixuid-0.3-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    chown root:root /usr/local/bin/fixuid && \
+    chmod 4755 /usr/local/bin/fixuid && \
+    mkdir -p /etc/fixuid && \
+    printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
+ENTRYPOINT ["fixuid"]
+
+CMD ["/usr/local/sbin/php-fpm"]
+USER vfac:vfac
+
+RUN composer config --global repo.packagist composer https://packagist.org
