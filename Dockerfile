@@ -94,6 +94,7 @@ RUN apk --update add ca-certificates && \
         php7-xmlwriter \
         shadow \
         curl \
+        git \
         composer@edge-community \
     && rm -rf /var/cache/apk/*
 
