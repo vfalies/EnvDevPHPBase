@@ -91,6 +91,7 @@ RUN apk --update add ca-certificates && \
         php7-xmlwriter@edge-community \
         shadow@edge-community \
         curl \
+        git \
         libwebp@edge-main \
         composer@edge-community \
     && rm -rf /var/cache/apk/*
