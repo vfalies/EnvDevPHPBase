@@ -19,9 +19,9 @@ before_install:
 
   - docker --version
 
-  - docker build -q -t vfac/envdevphpbase:7.0 .
+  - docker build -q -t vfac/envdevphpbase:7.0-fpm .
 
-  - docker run --name php7.0 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.0
+  - docker run --name php7.0 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.0-fpm
 
   - docker-compose -f test/7.0/docker-compose.yml up -d
 
@@ -30,4 +30,6 @@ script:
   - docker exec php7.0 sh -c "php -v | grep 7.0"
   - docker exec php7.0 sh -c "php test/test.php |grep version"
   - docker exec php7.0 composer --version
+  - docker exec php7.0 nodejs -v
+  - docker exec php7.0 npm -v
   - curl -s localhost:8070/test.php |grep bcmath
