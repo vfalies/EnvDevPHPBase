@@ -27,4 +27,6 @@ script:
   - docker exec php7.0-fpm-alpine php -v
   - docker exec php7.0-fpm-alpine sh -c "php -v | grep 7.0"
   - docker exec php7.0-fpm-alpine composer --version
+  - docker exec php7.0-fpm-alpine nodejs -v
+  - docker exec php7.0-fpm-alpine npm -v
   - docker exec php7.0-fpm-alpine ps |grep php-fpm
