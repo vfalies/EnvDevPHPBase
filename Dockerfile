@@ -94,7 +94,9 @@ RUN apk --update add ca-certificates && \
         ssmtp \
         shadow@edge-community \
         curl \
-        nodejs \
+        libuv@edge-main \
+        nodejs@edge-main \
+        nodejs-npm@edge-main \
         git \
         composer@edge-community \
     && pecl install xdebug \
