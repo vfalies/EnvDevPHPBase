@@ -95,7 +95,9 @@ RUN apk --update add ca-certificates && \
         shadow@edge-community \
         curl \
         git \
-        nodejs \
+        libuv@edge-main \
+        nodejs@edge-main \
+        nodejs-npm@edge-main \
         composer@edge-community \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
