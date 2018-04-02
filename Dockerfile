@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y \
     libldb-dev \
     libldap2-dev \
     libsodium-dev \
+    gnupg2 \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
@@ -76,10 +77,15 @@ COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
+# Node JS installation
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
 # User creation
 RUN useradd -U -m -r -o -u 1003 vfac
 
-# install fixuid
+# Install fixuid
 RUN USER=vfac && \
     GROUP=vfac && \
     curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.3/fixuid-0.3-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
