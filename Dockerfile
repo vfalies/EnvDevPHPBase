@@ -92,7 +92,9 @@ RUN apk --update add ca-certificates && \
         shadow@edge-community \
         curl \
         git \
-        nodejs \
+        libuv@edge-main \
+        nodejs@edge-main \
+        nodejs-npm@edge-main \
         libwebp@edge-main \
         composer@edge-community \
     && rm -rf /var/cache/apk/*
