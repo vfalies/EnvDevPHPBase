@@ -3,6 +3,7 @@ LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apk --update add ca-certificates && \
     echo "@edge-community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+    echo "@edge-main http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
     apk add --no-cache $PHPIZE_DEPS && \
     apk add -U \
         php7-intl \
@@ -93,7 +94,9 @@ RUN apk --update add ca-certificates && \
         php7-pear-net_smtp-doc \
         php7-simplexml \
         php7-xmlwriter \
-        nodejs \
+        libuv@edge-main \
+        nodejs@edge-main \
+        nodejs-npm@edge-main \
         ssmtp \
         shadow \
         curl \
