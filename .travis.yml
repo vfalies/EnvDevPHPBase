@@ -25,3 +25,5 @@ before_install:
   - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli php -v
   - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli sh -c "php -v | grep 7.2"
   - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli composer --version
+  - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli nodejs -v
+  - docker run --rm -ti vfac/envdevphpbase:7.2-alpine-cli npm -v

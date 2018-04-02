@@ -95,6 +95,7 @@ RUN apk --update add ca-certificates && \
         shadow \
         curl \
         git \
+        nodejs \
         composer@edge-community \
     && rm -rf /var/cache/apk/*
 
