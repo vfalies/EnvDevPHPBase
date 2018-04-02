@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -y \
     libxslt1-dev \
     ssmtp \
     snmp \
+    gnupg2 \
     libgmp-dev \
     libldb-dev \
     libldap2-dev \
@@ -74,6 +75,11 @@ RUN yes | pecl install xdebug \
 COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
+
+# Node JS installation
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
+    && apt-get install -y nodejs build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
 # User creation
 RUN useradd -U -m -r -o -u 1003 vfac
