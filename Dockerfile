@@ -93,6 +93,7 @@ RUN apk --update add ca-certificates && \
         php7-pear-net_smtp-doc \
         php7-simplexml \
         php7-xmlwriter \
+        nodejs \
         ssmtp \
         shadow \
         curl \
