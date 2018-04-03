@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y \
     libgmp-dev \
     libldb-dev \
     libldap2-dev \
+    wget \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
@@ -72,7 +73,11 @@ RUN yes | pecl install xdebug \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # Composer installation
-COPY --from=composer:1.5 /usr/bin/composer /usr/bin/composer
+ADD scripts/composer.sh /tmp/composer.sh
+RUN chmod +x /tmp/composer.sh \
+    && /tmp/composer.sh \
+    && mv composer.phar /usr/local/bin/composer
+
 WORKDIR /var/www/html
 
 # Node JS installation
