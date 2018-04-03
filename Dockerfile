@@ -76,6 +76,7 @@ RUN yes | pecl install xdebug \
 # Composer installation
 ADD scripts/composer.sh /tmp/composer.sh
 RUN chmod +x /tmp/composer.sh \
+    && sync \
     && /tmp/composer.sh \
     && mv composer.phar /usr/local/bin/composer
 
