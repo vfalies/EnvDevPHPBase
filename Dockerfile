@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y \
     libldb-dev \
     libldap2-dev \
     wget \
+    && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
