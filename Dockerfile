@@ -95,8 +95,6 @@ RUN apk --update add ca-certificates && \
         php7-simplexml \
         php7-xmlwriter \
         libuv@edge-main \
-        nodejs@edge-main \
-        nodejs-npm@edge-main \
         ssmtp \
         shadow \
         curl \
