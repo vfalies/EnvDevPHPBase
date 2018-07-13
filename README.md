@@ -48,7 +48,3 @@ Two options have been customized:
 ### Composer
 
 Composer is installed to be used with your configuration of PHP.
-
-### NodeJs
-
-NodeJs v8.x is installed to be used with your configuration of PHP.
