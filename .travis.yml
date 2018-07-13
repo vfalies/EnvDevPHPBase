@@ -30,6 +30,4 @@ script:
   - docker exec php7.1 sh -c "php -v | grep 7.1"
   - docker exec php7.1 sh -c "php test/test.php |grep version"
   - docker exec php7.1 composer --version
-  - docker exec php7.1 nodejs -v
-  - docker exec php7.1 npm -v
   - curl -s localhost:8071/test.php |grep bcmath
