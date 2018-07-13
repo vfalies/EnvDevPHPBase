@@ -24,5 +24,3 @@ script:
   - docker run --rm vfac/envdevphpbase:7.1-cli php -v
   - docker run --rm vfac/envdevphpbase:7.1-cli sh -c "php -v | grep 7.1"
   - docker run --rm vfac/envdevphpbase:7.1-cli composer --version
-  - docker run --rm vfac/envdevphpbase:7.1-cli nodejs -v
-  - docker run --rm vfac/envdevphpbase:7.1-cli npm -v
