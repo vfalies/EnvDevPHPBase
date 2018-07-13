@@ -81,11 +81,6 @@ RUN chmod +x /tmp/composer.sh \
 
 WORKDIR /var/www/html
 
-# Node JS installation
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - \
-    && apt-get install -y nodejs build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
 # User creation
 RUN useradd -U -m -r -o -u 1003 vfac
 
