@@ -97,6 +97,8 @@ RUN apk --update add ca-certificates && \
         libuv@edge-main \
         git \
         composer@edge-community \
+        mongodb@edge-main \
+        unzip \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && rm -rf /var/cache/apk/*
