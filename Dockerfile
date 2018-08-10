@@ -100,6 +100,8 @@ RUN apk --update add ca-certificates && \
         curl \
         git \
         composer@edge-community \
+        mongodb@edge-main \
+        unzip \
     && pecl install xdebug \
     && docker-php-ext-enable xdebug \
     && rm -rf /var/cache/apk/*
