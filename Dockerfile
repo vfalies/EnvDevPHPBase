@@ -72,6 +72,10 @@ RUN yes | pecl install xdebug \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
+# Install MongoDB extension
+RUN yes | pecl install mongodb \
+    && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
+
 # Composer installation
 ADD scripts/composer.sh /tmp/composer.sh
 RUN chmod +x /tmp/composer.sh \
