@@ -98,6 +98,8 @@ RUN apk --update add ca-certificates && \
         git \
         libuv@edge-main \
         composer@edge-community \
+        mongodb@edge-main \
+        unzip \
     && rm -rf /var/cache/apk/*
 
 WORKDIR /var/www/html
