@@ -63,7 +63,7 @@ RUN apk --update add ca-certificates && \
         php7-pdo_dblib \
         php7-pgsql \
         php7-pdo_odbc \
-        php7-xdebug \
+        # php7-xdebug \
         php7-zip \
         php7-apache2 \
         php7-cgi \
