@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.3-rc-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y \
     libldb-dev \
     libldap2-dev \
     libsodium-dev \
+    libzip-dev \
     gnupg2 \
     wget \
     unzip \
