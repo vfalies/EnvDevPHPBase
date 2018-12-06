@@ -1,4 +1,4 @@
-FROM php:7.2-cli-alpine
+FROM php:7.3-rc-cli-alpine
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apk --update add ca-certificates && \
