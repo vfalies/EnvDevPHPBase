@@ -19,12 +19,12 @@ before_install:
 
   - docker --version
 
-  - docker build -q -t vfac/envdevphpbase:7.2-fpm-alpine .
+  - docker build -q -t vfac/envdevphpbase:7.3-fpm-alpine .
 
-  - docker run --name php7.2-fpm-alpine -d -v $PWD:/var/www/html vfac/envdevphpbase:7.2-fpm-alpine
+  - docker run --name php7.3-fpm-alpine -d -v $PWD:/var/www/html vfac/envdevphpbase:7.3-fpm-alpine
 
 script:
-  - docker exec php7.2-fpm-alpine php -v
-  - docker exec php7.2-fpm-alpine sh -c "php -v | grep 7.2"
-  - docker exec php7.2-fpm-alpine composer --version
-  - docker exec php7.2-fpm-alpine ps |grep php-fpm
+  - docker exec php7.3-fpm-alpine php -v
+  - docker exec php7.3-fpm-alpine sh -c "php -v | grep 7.3"
+  - docker exec php7.3-fpm-alpine composer --version
+  - docker exec php7.3-fpm-alpine ps |grep php-fpm
