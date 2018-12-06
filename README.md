@@ -12,9 +12,11 @@ Six PHP versions are available through image's tags:
 - 7.0 FPM
 - 7.1 FPM
 - 7.2 FPM
+- 7.3 FPM
 - 7.0 CLI
 - 7.1 CLI
 - 7.2 CLI
+- 7.3 CLI
 
 The latest version of EnvDevPHPBase (latest) (`vfac/envdevphpbase`) is a image with the last version of PHP FPM available.
 
@@ -28,7 +30,7 @@ A maximum of PHP extension have been added to be used in a maximum of projects.
 ## Usage
 
 ```
-docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:7.2-fpm
+docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:7.3-fpm
 ```
 
 ## Complements
