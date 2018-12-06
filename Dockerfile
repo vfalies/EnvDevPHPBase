@@ -102,8 +102,8 @@ RUN apk --update add ca-certificates && \
         composer@edge-community \
         mongodb@edge-main \
         unzip \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    # && pecl install xdebug \
+    # && docker-php-ext-enable xdebug \
     && rm -rf /var/cache/apk/*
 
 # # set up sendmail config
@@ -124,8 +124,8 @@ RUN echo "sendmail_path=sendmail -i -t" >> /usr/local/etc/php/conf.d/php-sendmai
 RUN echo "localhost localhost.localdomain" >> /etc/hosts
 
 # Set up XDebug
-RUN echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini && \
-    echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+# RUN echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini && \
+#     echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 WORKDIR /var/www/html
 
