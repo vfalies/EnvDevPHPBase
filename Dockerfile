@@ -1,4 +1,4 @@
-FROM php:7.3-rc-cli
+FROM php:7.3-cli
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
