@@ -42,10 +42,7 @@ There are no consequence if you use this image for an another utilisation.
 
 ### X-Debug
 
-X-Debug is installed with standard options.
-Two options have been customized:
-    - remote_enable=on
-    - remote_autostart=off
+X-Debug is actually not compatible with PHP 7.3
 
 ### Composer
 
