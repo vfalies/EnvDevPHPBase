@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.3-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -33,6 +33,7 @@ RUN apt-get update && apt-get install -y \
     libldb-dev \
     libldap2-dev \
     libsodium-dev \
+    libzip-dev \
     gnupg2 \
     wget \
     unzip \
@@ -69,10 +70,10 @@ RUN echo "sendmail_path=sendmail -i -t" >> /usr/local/etc/php/conf.d/php-sendmai
 RUN echo "localhost localhost.localdomain" >> /etc/hosts
 
 # Set up XDebug
-RUN yes | pecl install xdebug \
-    && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
-    && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
+# RUN yes | pecl install xdebug \
+#     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
+#     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
 # Install MongoDB extension
 RUN yes | pecl install mongodb \
