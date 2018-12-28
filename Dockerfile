@@ -77,6 +77,9 @@ RUN yes | pecl install xdebug \
 RUN yes | pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
 
+# Install AMQP extension
+RUN pecl install amqp && docker-php-ext-enable amqp
+
 # Composer installation
 ADD scripts/composer.sh /tmp/composer.sh
 RUN chmod +x /tmp/composer.sh \
