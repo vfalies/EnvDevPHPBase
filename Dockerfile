@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install -y \
     gnupg2 \
     wget \
     unzip \
+    librabbitmq-dev \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
@@ -53,7 +54,7 @@ RUN apt-get update && apt-get install -y \
 
 # set up sendmail config
 RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
-RUN echo "root=vincent.falies@wolterskluwer.com" >> /etc/ssmtp/ssmtp.conf
+RUN echo "root=vincent@vfac.fr" >> /etc/ssmtp/ssmtp.conf
 RUN echo "mailhub=maildev" >> /etc/ssmtp/ssmtp.conf
 # The above 'maildev' is the name you used for the link command
 # in your docker-compose file or docker link command.
@@ -77,6 +78,9 @@ RUN yes | pecl install xdebug \
 # Install MongoDB extension
 RUN yes | pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
+
+# Install AMQP extension
+RUN pecl install amqp && docker-php-ext-enable amqp
 
 # Composer installation
 ADD scripts/composer.sh /tmp/composer.sh
