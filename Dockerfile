@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install -y \
     gnupg2 \
     wget \
     unzip \
+    librabbitmq-dev \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
@@ -78,6 +79,9 @@ RUN echo "localhost localhost.localdomain" >> /etc/hosts
 # Install MongoDB extension
 RUN yes | pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
+
+# Install AMQP extension
+RUN pecl install amqp && docker-php-ext-enable amqp
 
 # Composer installation
 ADD scripts/composer.sh /tmp/composer.sh
