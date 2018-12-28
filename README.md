@@ -16,6 +16,7 @@ Seven PHP versions are available through image's tags:
 - 7.0 CLI
 - 7.1 CLI
 - 7.2 CLI
+- 7.3 CLI
 
 The latest version of EnvDevPHPBase (latest) (`vfac/envdevphpbase`) is a image with the last version of PHP FPM available.
 
@@ -41,10 +42,7 @@ There are no consequence if you use this image for an another utilisation.
 
 ### X-Debug
 
-X-Debug is installed with standard options.
-Two options have been customized:
-    - remote_enable=on
-    - remote_autostart=off
+X-Debug is actually not compatible with PHP 7.3
 
 ### Composer
 

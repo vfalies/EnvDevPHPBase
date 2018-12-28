@@ -1,4 +1,4 @@
-FROM php:7.3-rc-fpm
+FROM php:7.3-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \

@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Added
 
 - Add PHP 7.3 FPM branch
+- Add PHP 7.3 FPM Alpine branch
+- Add PHP 7.3 CLI branch
+- Add PHP 7.3 CLI Alpine branch
 
 ## [2018-08-10]
 
