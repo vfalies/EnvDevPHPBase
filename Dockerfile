@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install -y \
     libldap2-dev \
     wget \
     unzip \
+    mibrabbitmq-dev \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
