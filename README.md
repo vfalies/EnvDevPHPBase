@@ -40,10 +40,6 @@ docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:7
 The maildev configuration has been added into this image to be used into the [EnvDev project](https://vfac.fr/projects/envdev).
 There are no consequence if you use this image for an another utilisation.
 
-### X-Debug
-
-X-Debug is actually not compatible with PHP 7.3
-
 ### Composer
 
 Composer is installed to be used with your configuration of PHP.
