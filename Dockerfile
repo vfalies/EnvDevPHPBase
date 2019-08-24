@@ -4,6 +4,8 @@ LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 RUN apk --update add ca-certificates && \
     echo "@edge-community http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     echo "@edge-main http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "@3.9-community http://dl-cdn.alpinelinux.org/alpine/v3.9/community" >> /etc/apk/repositories && \
+    echo "@3.8-community http://dl-cdn.alpinelinux.org/alpine/v3.8/community" >> /etc/apk/repositories && \
     apk add --no-cache $PHPIZE_DEPS && \
     apk add -U \
         php7-intl \
@@ -100,7 +102,8 @@ RUN apk --update add ca-certificates && \
         curl \
         git \
         composer@edge-community \
-        mongodb@edge-main \
+        php7-imagick-dev@3.8-community \
+        php7-pecl-mongodb@3.9-community \
         unzip \
     # && pecl install xdebug \
     # && docker-php-ext-enable xdebug \
