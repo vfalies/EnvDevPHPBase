@@ -27,7 +27,8 @@ RUN apt-get update && apt-get install -y \
     libtidy-dev \
     libxslt1.1 \
     libxslt1-dev \
-    ssmtp \
+    msmtp \
+    msmtp-mta \
     snmp \
     gnupg2 \
     libgmp-dev \
@@ -54,9 +55,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # set up sendmail config
-RUN echo "hostname=localhost.localdomain" > /etc/ssmtp/ssmtp.conf
-RUN echo "root=vincent.falies@wolterskluwer.com" >> /etc/ssmtp/ssmtp.conf
-RUN echo "mailhub=maildev" >> /etc/ssmtp/ssmtp.conf
+ADD conf/msmtprc /etc/msmtprc
 # The above 'maildev' is the name you used for the link command
 # in your docker-compose file or docker link command.
 # Docker automatically adds that name in the hosts file
@@ -89,8 +88,6 @@ RUN chmod +x /tmp/composer.sh \
     && sync \
     && /tmp/composer.sh \
     && mv composer.phar /usr/local/bin/composer
-
-WORKDIR /var/www/html
 
 # User creation
 RUN useradd -U -m -r -o -u 1003 vfac
