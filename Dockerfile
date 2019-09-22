@@ -1,4 +1,4 @@
-FROM php:7.0-fpm
+FROM php:5.6-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -48,7 +48,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap \
     && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext gmp hash iconv \
-                                         mbstring mcrypt mysqli opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
+                                         mbstring mcrypt mysqli opcache pcntl pdo pdo_mysql pdo_sqlite posix pspell readline recode \
                                          session shmop simplexml snmp soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlrpc \
                                          xmlwriter xsl zip \
     && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
@@ -70,7 +70,7 @@ RUN echo "sendmail_path=sendmail -i -t" >> /usr/local/etc/php/conf.d/php-sendmai
 RUN echo "localhost localhost.localdomain" >> /etc/hosts
 
 # Set up XDebug
-RUN yes | pecl install xdebug \
+RUN yes | pecl install xdebug-2.5.5 \
     && echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
@@ -114,7 +114,7 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/193000/ins
     && rm instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip \
     && echo /opt/oracle/instantclient_19_3 > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig \
-    && echo "instantclient,/opt/oracle/instantclient_19_3" | pecl install oci8 \
+    && echo "instantclient,/opt/oracle/instantclient_19_3" | pecl install oci8-2.0.8 \
     && echo "extension=oci8.so" >> /usr/local/etc/php/conf.d/oci8.ini
 
 WORKDIR /var/www/html
