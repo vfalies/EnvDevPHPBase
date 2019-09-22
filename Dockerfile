@@ -30,14 +30,14 @@ RUN apt-get update && apt-get install -y \
     msmtp \
     msmtp-mta \
     snmp \
-    ssmtp \
     gnupg2 \
     libgmp-dev \
     libldb-dev \
     libldap2-dev \
     wget \
     unzip \
-    librabbit-dev \
+    librabbitmq-dev \
+    libaio1 \
     && ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/include/gmp.h \
     && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
@@ -89,8 +89,6 @@ RUN chmod +x /tmp/composer.sh \
     && /tmp/composer.sh \
     && mv composer.phar /usr/local/bin/composer
 
-WORKDIR /var/www/html
-
 # User creation
 RUN useradd -U -m -r -o -u 1003 vfac
 
@@ -103,6 +101,23 @@ RUN USER=vfac && \
     mkdir -p /etc/fixuid && \
     printf "user: $USER\ngroup: $GROUP\n" > /etc/fixuid/config.yml
 ENTRYPOINT ["fixuid", "-q"]
+
+# OCI installation
+RUN mkdir -p /opt/oracle
+WORKDIR /opt/oracle
+
+RUN wget https://download.oracle.com/otn_software/linux/instantclient/193000/instantclient-basic-linux.x64-19.3.0.0.0dbru.zip \
+    && wget https://download.oracle.com/otn_software/linux/instantclient/193000/instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip \
+    && unzip instantclient-basic-linux.x64-19.3.0.0.0dbru.zip \
+    && unzip instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip \
+    && rm instantclient-basic-linux.x64-19.3.0.0.0dbru.zip \
+    && rm instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip \
+    && echo /opt/oracle/instantclient_19_3 > /etc/ld.so.conf.d/oracle-instantclient.conf \
+    && ldconfig \
+    && echo "instantclient,/opt/oracle/instantclient_19_3" | pecl install oci8 \
+    && echo "extension=oci8.so" >> /usr/local/etc/php/conf.d/oci8.ini
+
+WORKDIR /var/www/html
 
 CMD ["/usr/local/sbin/php-fpm"]
 USER vfac:vfac
