@@ -117,6 +117,15 @@ RUN wget https://download.oracle.com/otn_software/linux/instantclient/193000/ins
     && echo "instantclient,/opt/oracle/instantclient_19_3" | pecl install oci8-2.0.8 \
     && echo "extension=oci8.so" >> /usr/local/etc/php/conf.d/oci8.ini
 
+# Imagick installation
+RUN apt-get update && apt-get install -y \
+    libmagickwand-dev \
+    && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN yes | pecl install imagick \
+    && echo "extension=imagick.so" > /usr/local/etc/php/conf.d/imagick.ini
+
 WORKDIR /var/www/html
 
 CMD ["/usr/local/sbin/php-fpm"]
