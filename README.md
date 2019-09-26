@@ -7,7 +7,7 @@ The utlisation outside this project is naturally possible.
 
 ## Images
 
-Seven PHP versions are available through image's tags:
+Nine PHP versions are available through image's tags:
 
 - 5.6 FPM
 - 7.0 FPM
