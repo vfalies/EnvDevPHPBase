@@ -52,54 +52,21 @@ RUN PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ss
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap
-RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif ffi fileinfo filter ftp gd gettext gmp
-RUN docker-php-ext-install -j$(nproc) iconv
-RUN docker-php-ext-install -j$(nproc) intl
-RUN docker-php-ext-install -j$(nproc) json
-RUN docker-php-ext-install -j$(nproc) ldap
-RUN docker-php-ext-install -j$(nproc) mbstring
-RUN docker-php-ext-install -j$(nproc) mysqli
+RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif ffi fileinfo filter ftp gd gettext gmp iconv \
+    intl json ldap mbstring mysqli opcache pcntl pdo pdo_mysql pdo_pgsql pdo_sqlite pgsql phar posix pspell readline session shmop \
+    simplexml snmp soap sockets sodium sysvmsg sysvsem sysvshm tidy tokenizer xml xmlrpc xmlwriter xsl zend_test zip
 # RUN docker-php-ext-install -j$(nproc) oci8
 # RUN apt-get install -y unixodbc unixodbc-dev
 # RUN docker-php-ext-configure odbc --with-pdo-odbc=unixODBC,/usr
 # RUN docker-php-ext-install -j$(nproc) odbc
-RUN docker-php-ext-install -j$(nproc) opcache
-RUN docker-php-ext-install -j$(nproc) pcntl
-RUN docker-php-ext-install -j$(nproc) pdo
 # RUN docker-php-ext-install -j$(nproc) pdo_dblib
 # RUN apt-get install -y libfbclient2
 # RUN docker-php-ext-install -j$(nproc) pdo_firebird
-RUN docker-php-ext-install -j$(nproc) pdo_mysql
 # RUN docker-php-ext-install -j$(nproc) pdo_oci
 # RUN docker-php-ext-install -j$(nproc) pdo_odbc
-RUN docker-php-ext-install -j$(nproc) pdo_pgsql
-RUN docker-php-ext-install -j$(nproc) pdo_sqlite
-RUN docker-php-ext-install -j$(nproc) pgsql
-RUN docker-php-ext-install -j$(nproc) phar
-RUN docker-php-ext-install -j$(nproc) posix
-RUN docker-php-ext-install -j$(nproc) pspell
-RUN docker-php-ext-install -j$(nproc) readline
 # RUN docker-php-ext-install -j$(nproc) reflection
-RUN docker-php-ext-install -j$(nproc) session
-RUN docker-php-ext-install -j$(nproc) shmop
-RUN docker-php-ext-install -j$(nproc) simplexml
-RUN docker-php-ext-install -j$(nproc) snmp
-RUN docker-php-ext-install -j$(nproc) soap
-RUN docker-php-ext-install -j$(nproc) sockets
-RUN docker-php-ext-install -j$(nproc) sodium
 # RUN apt-get install -y libargon2-0 libargon2-0-dev
-RUN docker-php-ext-install -j$(nproc) sysvmsg
-RUN docker-php-ext-install -j$(nproc) sysvsem
-RUN docker-php-ext-install -j$(nproc) sysvshm
-RUN docker-php-ext-install -j$(nproc) tidy
-RUN docker-php-ext-install -j$(nproc) tokenizer
-RUN docker-php-ext-install -j$(nproc) xml
 # RUN docker-php-ext-install -j$(nproc) xmlreader
-RUN docker-php-ext-install -j$(nproc) xmlrpc
-RUN docker-php-ext-install -j$(nproc) xmlwriter
-RUN docker-php-ext-install -j$(nproc) xsl
-RUN docker-php-ext-install -j$(nproc) zend_test
-RUN docker-php-ext-install -j$(nproc) zip
 
 RUN apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
