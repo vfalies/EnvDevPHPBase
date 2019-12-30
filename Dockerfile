@@ -55,18 +55,6 @@ RUN PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ss
 RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif ffi fileinfo filter ftp gd gettext gmp iconv intl json ldap \
     mbstring mysqli opcache pcntl pdo pdo_mysql pdo_pgsql pdo_sqlite pgsql phar posix pspell readline session shmop simplexml snmp soap sockets sodium \
     sysvmsg sysvsem sysvshm tidy tokenizer xml xmlrpc xmlwriter xsl zend_test zip
-# RUN docker-php-ext-install -j$(nproc) oci8
-# RUN apt-get install -y unixodbc unixodbc-dev
-# RUN docker-php-ext-configure odbc --with-pdo-odbc=unixODBC,/usr
-# RUN docker-php-ext-install -j$(nproc) odbc
-# RUN docker-php-ext-install -j$(nproc) pdo_dblib
-# RUN apt-get install -y libfbclient2
-# RUN docker-php-ext-install -j$(nproc) pdo_firebird
-# RUN docker-php-ext-install -j$(nproc) pdo_oci
-# RUN docker-php-ext-install -j$(nproc) pdo_odbc
-# RUN docker-php-ext-install -j$(nproc) reflection
-# RUN apt-get install -y libargon2-0 libargon2-0-dev
-# RUN docker-php-ext-install -j$(nproc) xmlreader
 
 RUN apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
