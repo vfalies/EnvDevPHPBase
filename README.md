@@ -13,10 +13,12 @@ Eight PHP versions are available through image's tags:
 - 7.1 FPM
 - 7.2 FPM
 - 7.3 FPM
+- 7.4 FPM
 - 7.0 CLI
 - 7.1 CLI
 - 7.2 CLI
 - 7.3 CLI
+- 7.4 CLI
 
 The latest version of EnvDevPHPBase (latest) (`vfac/envdevphpbase`) is a image with the last version of PHP FPM available.
 
