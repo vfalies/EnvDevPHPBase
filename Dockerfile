@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -42,19 +42,21 @@ RUN apt-get update && apt-get install -y \
     librabbitmq-dev \
     inetutils-ping \
     libaio1 \
-    && docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
+    libonig-dev \
+    libpq-dev
+RUN PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
     && docker-php-ext-install -j$(nproc) imap \
     && docker-php-ext-configure intl \
     && docker-php-ext-install -j$(nproc) intl \
-    && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
-    && docker-php-ext-install ldap \
-    && docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif fileinfo ftp gettext gmp hash iconv \
-                                         mbstring sodium mysqli opcache pcntl pdo pdo_mysql pdo_sqlite phar posix pspell readline recode \
-                                         session shmop simplexml snmp soap sockets sysvmsg sysvsem sysvshm tidy tokenizer wddx xml xmlrpc \
-                                         xmlwriter xsl zip \
-    && apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
+    && docker-php-ext-install ldap
+RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif ffi fileinfo filter ftp gd gettext gmp iconv intl json ldap \
+    mbstring mysqli opcache pcntl pdo pdo_mysql pdo_pgsql pdo_sqlite pgsql phar posix pspell readline session shmop simplexml snmp soap sockets sodium \
+    sysvmsg sysvsem sysvshm tidy tokenizer xml xmlrpc xmlwriter xsl zend_test zip
+
+RUN apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
 
 # set up sendmail config

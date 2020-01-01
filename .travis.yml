@@ -18,13 +18,13 @@ before_install:
   - chmod +x /usr/local/bin/docker-compose
 
   - docker --version
-  - docker build -q -t vfac/envdevphpbase:7.3-fpm .
-  - docker run --name php7.3 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.3-fpm
-  - docker-compose -f test/7.3/docker-compose.yml up -d
+  - docker build -q -t vfac/envdevphpbase:7.4-fpm .
+  - docker run --name php7.4 -d -v $PWD:/var/www/html vfac/envdevphpbase:7.4-fpm
+  - docker-compose -f test/7.4/docker-compose.yml up -d
 
 script:
-  - docker exec php7.3 php -v
-  - docker exec php7.3 sh -c "php -v | grep 7.3"
-  - docker exec php7.3 sh -c "php test/test.php |grep version"
-  - docker exec php7.3 composer --version
+  - docker exec php7.4 php -v
+  - docker exec php7.4 sh -c "php -v | grep 7.4"
+  - docker exec php7.4 sh -c "php test/test.php |grep version"
+  - docker exec php7.4 composer --version
   - curl -s localhost:8072/test.php |grep bcmath
