@@ -1,0 +1,12 @@
+name: Docker Image CI EnvDevPHPBase 7.4 CLI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build the Docker image EnvDevPHPBase 7.4 CLI
+        run: docker build . --file Dockerfile --tag vfac/envdevphpbase:7.4-cli
