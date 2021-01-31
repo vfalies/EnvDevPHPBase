@@ -1,4 +1,4 @@
-FROM php:8.0-fpm
+FROM php:8.0-cli
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \

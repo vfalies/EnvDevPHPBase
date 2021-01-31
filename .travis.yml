@@ -18,8 +18,8 @@ before_install:
   - chmod +x /usr/local/bin/docker-compose
 
   - docker --version
-  - docker build -q -t vfac/envdevphpbase:8.0-fpm .
-  - docker run --name php8.0 -d -v $PWD:/var/www/html vfac/envdevphpbase:8.0-fpm
+  - docker build -q -t vfac/envdevphpbase:8.0-cli .
+  - docker run --name php8.0 -d -v $PWD:/var/www/html vfac/envdevphpbase:8.0-cli
   - docker-compose -f test/8.0/docker-compose.yml up -d
 
 script:
