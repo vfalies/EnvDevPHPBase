@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.0-fpm
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apt-get update && apt-get install -y \
@@ -52,9 +52,9 @@ RUN PHP_OPENSSL=yes docker-php-ext-configure imap --with-kerberos --with-imap-ss
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ \
     && docker-php-ext-install ldap
-RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar ctype curl dba dom enchant exif ffi fileinfo filter ftp gd gettext gmp iconv intl json ldap \
-    mbstring mysqli opcache pcntl pdo pdo_mysql pdo_pgsql pdo_sqlite pgsql phar posix pspell readline session shmop simplexml snmp soap sockets sodium \
-    sysvmsg sysvsem sysvshm tidy tokenizer xml xmlrpc xmlwriter xsl zend_test zip
+RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar dba enchant exif ffi fileinfo filter ftp gd gettext gmp intl ldap \
+    mysqli opcache pcntl pdo_mysql pdo_pgsql pgsql pspell shmop snmp soap sockets \
+    sysvmsg sysvsem sysvshm tidy xsl zend_test zip
 
 RUN apt-get clean -y && apt-get autoclean -y && apt-get autoremove -y \
     && rm -rf /var/lib/apt/lists/*
@@ -85,7 +85,7 @@ RUN yes | pecl install mongodb \
     && echo "extension=mongodb.so" > /usr/local/etc/php/conf.d/mongo.ini
 
 # Install AMQP extension
-RUN pecl install amqp && docker-php-ext-enable amqp
+# RUN pecl install amqp && docker-php-ext-enable amqp
 
 # Composer installation
 ADD scripts/composer.sh /tmp/composer.sh
@@ -100,7 +100,7 @@ RUN useradd -U -m -r -o -u 1003 vfac
 # Install fixuid
 RUN USER=vfac && \
     GROUP=vfac && \
-    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.4-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
     chown root:root /usr/local/bin/fixuid && \
     chmod 4755 /usr/local/bin/fixuid && \
     mkdir -p /etc/fixuid && \

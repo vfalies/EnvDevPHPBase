@@ -7,13 +7,13 @@ services:
       dockerfile: nginx/Dockerfile
     depends_on:
       - fpm
-    ports: 
+    ports:
       - 8072:80
     volumes:
-      - "$PWD/test:/var/www/html"      
+      - "$PWD/test:/var/www/html"
 
   fpm:
-    image: vfac/envdevphpbase:7.4
+    image: vfac/envdevphpbase:8.0
     expose:
       - 9000
     volumes:
