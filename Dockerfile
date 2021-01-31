@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine
+FROM php:8.0-fpm-alpine
 LABEL maintainer="Vincent Faliès <vincent@vfac.fr>"
 
 RUN apk --update add ca-certificates && \
@@ -9,105 +9,86 @@ RUN apk --update add ca-certificates && \
     echo "@3.8-community http://dl-cdn.alpinelinux.org/alpine/v3.8/community" >> /etc/apk/repositories && \
     apk add --no-cache $PHPIZE_DEPS && \
     apk add -U \
-    php7-intl \
-    php7-openssl \
-    php7-dba \
-    php7-sqlite3 \
-    php7-pear \
-    php7-tokenizer \
-    php7-phpdbg \
-    cacti-php7 \
-    xapian-bindings-php7 \
-    php7-litespeed \
-    php7-gmp \
-    php7-pdo_mysql \
-    php7-pcntl \
-    php7-common \
-    php7-xsl \
-    php7-fpm \
-    php7-imagick \
-    php7-mysqlnd \
-    php7-enchant \
-    php7-pspell \
-    php7-redis \
-    php7-snmp \
-    php7-doc \
-    php7-fileinfo \
-    php7-mbstring \
-    php7-dev \
-    php7-pear-mail_mime@3.10-community \
-    php7-xmlrpc \
-    php7-embed \
-    php7-xmlreader \
-    php7-pear-mdb2_driver_mysql@3.10-community \
-    php7-pdo_sqlite \
-    php7-pear-auth_sasl2@3.10-community \
-    php7-exif \
-    php7-recode \
-    php7-opcache \
-    php7-ldap \
-    php7-posix \
-    php7-pear-net_socket \
-    php7-session \
-    php7-gd \
-    php7-gettext \
-    php7-mailparse \
-    php7-json \
-    php7-xml \
-    php7 \
-    php7-iconv \
-    php7-sysvshm \
-    php7-curl \
-    php7-shmop \
-    php7-odbc \
-    php7-phar \
-    php7-pdo_pgsql \
-    php7-imap \
-    php7-pear-mdb2_driver_pgsql@3.10-community \
-    php7-pdo_dblib \
-    php7-pgsql \
-    php7-pdo_odbc \
-    php7-xdebug \
-    php7-zip \
-    php7-apache2 \
-    php7-cgi \
-    php7-ctype \
-    php7-amqp \
-    php7-mcrypt \
-    php7-wddx \
-    php7-pear-net_smtp@3.10-community \
-    php7-bcmath \
-    php7-calendar \
-    php7-tidy \
-    php7-dom \
-    php7-sockets \
-    php7-zmq \
-    php7-memcached \
-    php7-soap \
-    php7-apcu \
-    php7-sysvmsg \
-    php7-zlib \
-    php7-imagick-dev \
-    php7-ftp \
-    php7-sysvsem \
-    php7-pdo \
-    php7-pear-auth_sasl@3.10-community \
-    php7-bz2 \
-    php7-mysqli \
-    php7-pear-net_smtp-doc@3.10-community \
-    php7-simplexml \
-    php7-xmlwriter \
+    php8-intl \
+    php8-openssl \
+    php8-dba \
+    php8-sqlite3 \
+    php8-pear \
+    php8-phpdbg \
+    php8-litespeed \
+    php8-gmp \
+    php8-pdo_mysql \
+    php8-pcntl \
+    php8-common \
+    php8-xsl \
+    php8-fpm \
+    # php8-imagick \
+    php8-mysqlnd \
+    php8-enchant \
+    php8-pspell \
+    # php8-redis \
+    php8-snmp \
+    php8-doc \
+    php8-dev \
+    # php8-pear-mail_mime@3.10-community \
+    # php8-xmlrpc \
+    php8-embed \
+    # php8-pear-mdb2_driver_mysql@3.10-community \
+    # php8-pear-auth_sasl2@3.10-community \
+    php8-exif \
+    # php8-recode \
+    php8-opcache \
+    php8-ldap \
+    php8-posix \
+    # php8-pear-net_socket \
+    php8-gd \
+    php8-gettext \
+    # php8-mailparse \
+    php8 \
+    php8-sysvshm \
+    php8-shmop \
+    php8-odbc \
+    php8-phar \
+    php8-pdo_pgsql \
+    php8-imap \
+    # php8-pear-mdb2_driver_pgsql@3.10-community \
+    php8-pdo_dblib \
+    php8-pgsql \
+    php8-pdo_odbc \
+    # php8-xdebug \
+    php8-apache2 \
+    php8-cgi \
+    php8-ctype \
+    # php8-wddx \
+    # php8-pear-net_smtp@3.10-community \
+    php8-bcmath \
+    php8-calendar \
+    php8-tidy \
+    php8-sockets \
+    # php8-zmq \
+    # php8-memcached \
+    php8-soap \
+    # php8-apcu \
+    php8-sysvmsg \
+    # php8-zlib \
+    # php8-imagick-dev \
+    php8-ftp \
+    php8-sysvsem \
+    # php8-pear-auth_sasl@3.10-community \
+    php8-bz2 \
+    php8-mysqli \
+    # php8-pear-net_smtp-doc@3.10-community \
     libuv@edge-main \
     ssmtp \
     shadow \
     curl \
     git \
     composer@edge-community \
-    php7-imagick-dev@3.8-community \
-    php7-pecl-mongodb@3.9-community \
+    # php8-imagick-dev@3.8-community \
+    php8-pecl-mongodb \
     unzip \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
+    # && pecl install xdebug \
+    # && docker-php-ext-enable xdebug \
     && rm -rf /var/cache/apk/*
 
 # # set up sendmail config
@@ -139,7 +120,7 @@ RUN useradd -U -m -r -o -u 1003 vfac
 # install fixuid
 RUN USER=vfac && \
     GROUP=vfac && \
-    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.4/fixuid-0.4-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
+    curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - && \
     chown root:root /usr/local/bin/fixuid && \
     chmod 4755 /usr/local/bin/fixuid && \
     mkdir -p /etc/fixuid && \
