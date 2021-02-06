@@ -13,7 +13,7 @@ services:
       - "$PWD/test:/var/www/html"
 
   fpm:
-    image: vfac/envdevphpbase:8.0
+    image: vfac/envdevphpbase:8.0-fpm
     expose:
       - 9000
     volumes:
