@@ -35,7 +35,7 @@ A maximum of PHP extension have been added to be used in a maximum of projects.
 ## Usage
 
 ```
-docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:7.4-fpm
+docker run -d --name php -p 9000:9000 -v $PWD:/var/www/html vfac/envdevphpbase:8.0-fpm
 ```
 
 ## Complements
